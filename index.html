@@ -1,0 +1,170 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><title>Pikadex — Pokédex Nacional</title><style>
+:root{color-scheme:dark;--bg:#0b1020;--panel:#151e32;--line:#283650;--muted:#9ba9c5;--yellow:#f4c945;--green:#86efac;--blue:#6ca7ff}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#172440 0,#0b1020 55%);color:#f5f7fc;font:15px/1.45 system-ui,-apple-system,sans-serif}main{max-width:1120px;margin:auto;padding:22px 16px 50px}.brand{display:flex;align-items:center;gap:13px}.logo{background:var(--yellow);color:#151515;border-radius:14px;padding:12px;font-size:25px}.brand h1{font-size:27px;letter-spacing:2px;margin:0}.muted{color:var(--muted)}.sub{font-size:12px;letter-spacing:1px}.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:22px 0}.stat{background:#151e32ef;border:1px solid var(--line);border-radius:16px;padding:16px}.stat small{display:block;color:var(--muted);font-size:11px;letter-spacing:.7px}.stat strong{display:block;font-size:28px;margin:4px 0}.bar,.genbar{height:7px;background:#2a354c;border-radius:20px;overflow:hidden;margin-top:8px}.bar span,.genbar span{display:block;height:100%;background:var(--yellow);width:0;transition:width .2s}.controls{display:grid;grid-template-columns:2fr 1fr;gap:10px;margin:16px 0}input,select,button{font:inherit;color:inherit;background:#10182a;border:1px solid #354461;border-radius:10px;padding:11px 12px;min-width:0}input:focus,select:focus{outline:2px solid var(--blue)}.generation{margin:14px 0;background:#151e32;border:1px solid var(--line);border-radius:16px;padding:15px}.genhead{width:100%;border:0;background:transparent;padding:0;color:inherit;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;padding-bottom:10px}.genhead h2{font-size:19px;margin:0}.genrange{font-size:12px;color:var(--muted)}.genright{text-align:right;white-space:nowrap}.genright strong{display:block;font-size:17px}.genright small{color:var(--muted)}.genbody{padding-top:12px}.genbody[hidden]{display:none}.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px}.poke{cursor:pointer;text-align:left;background:#10182a;border:1px solid var(--line);border-radius:12px;padding:12px;min-height:66px}.poke:hover{border-color:var(--blue)}.poke.owned{background:#18332e;border-color:#397d64}.number{display:block;color:var(--muted);font-size:11px}.poke b{display:block;margin-top:4px;overflow-wrap:anywhere}.ownedmark{float:right;color:var(--green)}.status{padding:12px 0;color:var(--muted)}.empty{text-align:center;padding:30px;color:var(--muted)}footer{margin-top:30px;border-top:1px solid var(--line);padding-top:15px;color:var(--muted);font-size:12px}@media(max-width:650px){main{padding:17px 11px}.stats{gap:7px}.stat{padding:11px}.stat strong{font-size:22px}.controls{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.brand h1{font-size:23px}}
+</style></head><body><main><header class="brand"><div class="logo">⚡</div><div><h1>PIKADEX</h1><div class="muted sub">POKÉDEX NACIONAL · COLECCIÓN</div></div></header><p class="muted">Marca los Pokémon que ya tienes. Esta versión no descarga imágenes ni consulta páginas externas.</p><section class="stats"><div class="stat"><small>POKÉMON EN LA POKÉDEX</small><strong>1.025</strong><span class="muted">9 generaciones</span></div><div class="stat"><small>EN TU COLECCIÓN</small><strong id="have">0</strong><div class="bar"><span id="bar"></span></div></div><div class="stat"><small>PROGRESO</small><strong id="pct">0%</strong><span class="muted" id="missing">1.025 pendientes</span></div></section><div class="controls"><input id="search" type="search" placeholder="Buscar por nombre o número…"><select id="ownership"><option value="all">Todos los Pokémon</option><option value="missing">Me faltan</option><option value="owned">Los tengo</option></select></div><div id="status" class="status">Abre una generación para ver sus casillas.</div><div id="results">
+<section class="generation">
+  <button type="button" class="genhead" aria-expanded="false" aria-controls="body-1" id="head-1">
+    <span><h2>Kanto</h2><span class="genrange">Generación 1 · #1–#151</span></span>
+    <span class="genright"><strong id="count-1">0 / 151</strong><small>conseguidos</small></span>
+    <span id="arrow-1">⌄</span>
+  </button>
+  <div class="genbar"><span id="bar-1"></span></div>
+  <div class="genbody" id="body-1" hidden></div>
+</section>
+
+<section class="generation">
+  <button type="button" class="genhead" aria-expanded="false" aria-controls="body-2" id="head-2">
+    <span><h2>Johto</h2><span class="genrange">Generación 2 · #152–#251</span></span>
+    <span class="genright"><strong id="count-2">0 / 100</strong><small>conseguidos</small></span>
+    <span id="arrow-2">⌄</span>
+  </button>
+  <div class="genbar"><span id="bar-2"></span></div>
+  <div class="genbody" id="body-2" hidden></div>
+</section>
+
+<section class="generation">
+  <button type="button" class="genhead" aria-expanded="false" aria-controls="body-3" id="head-3">
+    <span><h2>Hoenn</h2><span class="genrange">Generación 3 · #252–#386</span></span>
+    <span class="genright"><strong id="count-3">0 / 135</strong><small>conseguidos</small></span>
+    <span id="arrow-3">⌄</span>
+  </button>
+  <div class="genbar"><span id="bar-3"></span></div>
+  <div class="genbody" id="body-3" hidden></div>
+</section>
+
+<section class="generation">
+  <button type="button" class="genhead" aria-expanded="false" aria-controls="body-4" id="head-4">
+    <span><h2>Sinnoh</h2><span class="genrange">Generación 4 · #387–#493</span></span>
+    <span class="genright"><strong id="count-4">0 / 107</strong><small>conseguidos</small></span>
+    <span id="arrow-4">⌄</span>
+  </button>
+  <div class="genbar"><span id="bar-4"></span></div>
+  <div class="genbody" id="body-4" hidden></div>
+</section>
+
+<section class="generation">
+  <button type="button" class="genhead" aria-expanded="false" aria-controls="body-5" id="head-5">
+    <span><h2>Teselia</h2><span class="genrange">Generación 5 · #494–#649</span></span>
+    <span class="genright"><strong id="count-5">0 / 156</strong><small>conseguidos</small></span>
+    <span id="arrow-5">⌄</span>
+  </button>
+  <div class="genbar"><span id="bar-5"></span></div>
+  <div class="genbody" id="body-5" hidden></div>
+</section>
+
+<section class="generation">
+  <button type="button" class="genhead" aria-expanded="false" aria-controls="body-6" id="head-6">
+    <span><h2>Kalos</h2><span class="genrange">Generación 6 · #650–#721</span></span>
+    <span class="genright"><strong id="count-6">0 / 72</strong><small>conseguidos</small></span>
+    <span id="arrow-6">⌄</span>
+  </button>
+  <div class="genbar"><span id="bar-6"></span></div>
+  <div class="genbody" id="body-6" hidden></div>
+</section>
+
+<section class="generation">
+  <button type="button" class="genhead" aria-expanded="false" aria-controls="body-7" id="head-7">
+    <span><h2>Alola</h2><span class="genrange">Generación 7 · #722–#809</span></span>
+    <span class="genright"><strong id="count-7">0 / 88</strong><small>conseguidos</small></span>
+    <span id="arrow-7">⌄</span>
+  </button>
+  <div class="genbar"><span id="bar-7"></span></div>
+  <div class="genbody" id="body-7" hidden></div>
+</section>
+
+<section class="generation">
+  <button type="button" class="genhead" aria-expanded="false" aria-controls="body-8" id="head-8">
+    <span><h2>Galar</h2><span class="genrange">Generación 8 · #810–#905</span></span>
+    <span class="genright"><strong id="count-8">0 / 96</strong><small>conseguidos</small></span>
+    <span id="arrow-8">⌄</span>
+  </button>
+  <div class="genbar"><span id="bar-8"></span></div>
+  <div class="genbody" id="body-8" hidden></div>
+</section>
+
+<section class="generation">
+  <button type="button" class="genhead" aria-expanded="false" aria-controls="body-9" id="head-9">
+    <span><h2>Paldea</h2><span class="genrange">Generación 9 · #906–#1025</span></span>
+    <span class="genright"><strong id="count-9">0 / 120</strong><small>conseguidos</small></span>
+    <span id="arrow-9">⌄</span>
+  </button>
+  <div class="genbar"><span id="bar-9"></span></div>
+  <div class="genbody" id="body-9" hidden></div>
+</section></div><footer>La colección se guarda en este navegador cuando el almacenamiento local está disponible. No necesita conexión a internet. Nombres en español basados en la base de datos de PokeAPI. Aviso: por ahora están incluidos los nombres de Kanto; las generaciones 2–9 usan etiquetas provisionales.</footer></main><script>
+const DATA={"names":["Bulbasaur","Ivysaur","Venusaur","Charmander","Charmeleon","Charizard","Squirtle","Wartortle","Blastoise","Caterpie","Metapod","Butterfree","Weedle","Kakuna","Beedrill","Pidgey","Pidgeotto","Pidgeot","Rattata","Raticate","Spearow","Fearow","Ekans","Arbok","Pikachu","Raichu","Sandshrew","Sandslash","Nidoran♀","Nidorina","Nidoqueen","Nidoran♂","Nidorino","Nidoking","Clefairy","Clefable","Vulpix","Ninetales","Jigglypuff","Wigglytuff","Zubat","Golbat","Oddish","Gloom","Vileplume","Paras","Parasect","Venonat","Venomoth","Diglett","Dugtrio","Meowth","Persian","Psyduck","Golduck","Mankey","Primeape","Growlithe","Arcanine","Poliwag","Poliwhirl","Poliwrath","Abra","Kadabra","Alakazam","Machop","Machoke","Machamp","Bellsprout","Weepinbell","Victreebel","Tentacool","Tentacruel","Geodude","Graveler","Golem","Ponyta","Rapidash","Slowpoke","Slowbro","Magnemite","Magneton","Farfetch’d","Doduo","Dodrio","Seel","Dewgong","Grimer","Muk","Shellder","Cloyster","Gastly","Haunter","Gengar","Onix","Drowzee","Hypno","Krabby","Kingler","Voltorb","Electrode","Exeggcute","Exeggutor","Cubone","Marowak","Hitmonlee","Hitmonchan","Lickitung","Koffing","Weezing","Rhyhorn","Rhydon","Chansey","Tangela","Kangaskhan","Horsea","Seadra","Goldeen","Seaking","Staryu","Starmie","Mr. Mime","Scyther","Jynx","Electabuzz","Magmar","Pinsir","Tauros","Magikarp","Gyarados","Lapras","Ditto","Eevee","Vaporeon","Jolteon","Flareon","Porygon","Omanyte","Omastar","Kabuto","Kabutops","Aerodactyl","Snorlax","Articuno","Zapdos","Moltres","Dratini","Dragonair","Dragonite","Mewtwo","Mew","Chikorita","Bayleef","Meganium","Cyndaquil","Quilava","Typhlosion","Totodile","Croconaw","Feraligatr","Sentret","Furret","Hoothoot","Noctowl","Ledyba","Ledian","Spinarak","Ariados","Crobat","Chinchou","Lanturn","Pichu","Cleffa","Igglybuff","Togepi","Togetic","Natu","Xatu","Mareep","Flaaffy","Ampharos","Bellossom","Marill","Azumarill","Sudowoodo","Politoed","Hoppip","Skiploom","Jumpluff","Aipom","Sunkern","Sunflora","Yanma","Wooper","Quagsire","Espeon","Umbreon","Murkrow","Slowking","Misdreavus","Unown","Wobbuffet","Girafarig","Pineco","Forretress","Dunsparce","Gligar","Steelix","Snubbull","Granbull","Qwilfish","Scizor","Shuckle","Heracross","Sneasel","Teddiursa","Ursaring","Slugma","Magcargo","Swinub","Piloswine","Corsola","Remoraid","Octillery","Delibird","Mantine","Skarmory","Houndour","Houndoom","Kingdra","Phanpy","Donphan","Porygon2","Stantler","Smeargle","Tyrogue","Hitmontop","Smoochum","Elekid","Magby","Miltank","Blissey","Raikou","Entei","Suicune","Larvitar","Pupitar","Tyranitar","Lugia","Ho-Oh","Celebi","Treecko","Grovyle","Sceptile","Torchic","Combusken","Blaziken","Mudkip","Marshtomp","Swampert","Poochyena","Mightyena","Zigzagoon","Linoone","Wurmple","Silcoon","Beautifly","Cascoon","Dustox","Lotad","Lombre","Ludicolo","Seedot","Nuzleaf","Shiftry","Taillow","Swellow","Wingull","Pelipper","Ralts","Kirlia","Gardevoir","Surskit","Masquerain","Shroomish","Breloom","Slakoth","Vigoroth","Slaking","Nincada","Ninjask","Shedinja","Whismur","Loudred","Exploud","Makuhita","Hariyama","Azurill","Nosepass","Skitty","Delcatty","Sableye","Mawile","Aron","Lairon","Aggron","Meditite","Medicham","Electrike","Manectric","Plusle","Minun","Volbeat","Illumise","Roselia","Gulpin","Swalot","Carvanha","Sharpedo","Wailmer","Wailord","Numel","Camerupt","Torkoal","Spoink","Grumpig","Spinda","Trapinch","Vibrava","Flygon","Cacnea","Cacturne","Swablu","Altaria","Zangoose","Seviper","Lunatone","Solrock","Barboach","Whiscash","Corphish","Crawdaunt","Baltoy","Claydol","Lileep","Cradily","Anorith","Armaldo","Feebas","Milotic","Castform","Kecleon","Shuppet","Banette","Duskull","Dusclops","Tropius","Chimecho","Absol","Wynaut","Snorunt","Glalie","Spheal","Sealeo","Walrein","Clamperl","Huntail","Gorebyss","Relicanth","Luvdisc","Bagon","Shelgon","Salamence","Beldum","Metang","Metagross","Regirock","Regice","Registeel","Latias","Latios","Kyogre","Groudon","Rayquaza","Jirachi","Deoxys","Turtwig","Grotle","Torterra","Chimchar","Monferno","Infernape","Piplup","Prinplup","Empoleon","Starly","Staravia","Staraptor","Bidoof","Bibarel","Kricketot","Kricketune","Shinx","Luxio","Luxray","Budew","Roserade","Cranidos","Rampardos","Shieldon","Bastiodon","Burmy","Wormadam","Mothim","Combee","Vespiquen","Pachirisu","Buizel","Floatzel","Cherubi","Cherrim","Shellos","Gastrodon","Ambipom","Drifloon","Drifblim","Buneary","Lopunny","Mismagius","Honchkrow","Glameow","Purugly","Chingling","Stunky","Skuntank","Bronzor","Bronzong","Bonsly","Mime Jr.","Happiny","Chatot","Spiritomb","Gible","Gabite","Garchomp","Munchlax","Riolu","Lucario","Hippopotas","Hippowdon","Skorupi","Drapion","Croagunk","Toxicroak","Carnivine","Finneon","Lumineon","Mantyke","Snover","Abomasnow","Weavile","Magnezone","Lickilicky","Rhyperior","Tangrowth","Electivire","Magmortar","Togekiss","Yanmega","Leafeon","Glaceon","Gliscor","Mamoswine","Porygon-Z","Gallade","Probopass","Dusknoir","Froslass","Rotom","Uxie","Mesprit","Azelf","Dialga","Palkia","Heatran","Regigigas","Giratina","Cresselia","Phione","Manaphy","Darkrai","Shaymin","Arceus","Victini","Snivy","Servine","Serperior","Tepig","Pignite","Emboar","Oshawott","Dewott","Samurott","Patrat","Watchog","Lillipup","Herdier","Stoutland","Purrloin","Liepard","Pansage","Simisage","Pansear","Simisear","Panpour","Simipour","Munna","Musharna","Pidove","Tranquill","Unfezant","Blitzle","Zebstrika","Roggenrola","Boldore","Gigalith","Woobat","Swoobat","Drilbur","Excadrill","Audino","Timburr","Gurdurr","Conkeldurr","Tympole","Palpitoad","Seismitoad","Throh","Sawk","Sewaddle","Swadloon","Leavanny","Venipede","Whirlipede","Scolipede","Cottonee","Whimsicott","Petilil","Lilligant","Basculin","Sandile","Krokorok","Krookodile","Darumaka","Darmanitan","Maractus","Dwebble","Crustle","Scraggy","Scrafty","Sigilyph","Yamask","Cofagrigus","Tirtouga","Carracosta","Archen","Archeops","Trubbish","Garbodor","Zorua","Zoroark","Minccino","Cinccino","Gothita","Gothorita","Gothitelle","Solosis","Duosion","Reuniclus","Ducklett","Swanna","Vanillite","Vanillish","Vanilluxe","Deerling","Sawsbuck","Emolga","Karrablast","Escavalier","Foongus","Amoonguss","Frillish","Jellicent","Alomomola","Joltik","Galvantula","Ferroseed","Ferrothorn","Klink","Klang","Klinklang","Tynamo","Eelektrik","Eelektross","Elgyem","Beheeyem","Litwick","Lampent","Chandelure","Axew","Fraxure","Haxorus","Cubchoo","Beartic","Cryogonal","Shelmet","Accelgor","Stunfisk","Mienfoo","Mienshao","Druddigon","Golett","Golurk","Pawniard","Bisharp","Bouffalant","Rufflet","Braviary","Vullaby","Mandibuzz","Heatmor","Durant","Deino","Zweilous","Hydreigon","Larvesta","Volcarona","Cobalion","Terrakion","Virizion","Tornadus","Thundurus","Reshiram","Zekrom","Landorus","Kyurem","Keldeo","Meloetta","Genesect","Chespin","Quilladin","Chesnaught","Fennekin","Braixen","Delphox","Froakie","Frogadier","Greninja","Bunnelby","Diggersby","Fletchling","Fletchinder","Talonflame","Scatterbug","Spewpa","Vivillon","Litleo","Pyroar","Flabébé","Floette","Florges","Skiddo","Gogoat","Pancham","Pangoro","Furfrou","Espurr","Meowstic","Honedge","Doublade","Aegislash","Spritzee","Aromatisse","Swirlix","Slurpuff","Inkay","Malamar","Binacle","Barbaracle","Skrelp","Dragalge","Clauncher","Clawitzer","Helioptile","Heliolisk","Tyrunt","Tyrantrum","Amaura","Aurorus","Sylveon","Hawlucha","Dedenne","Carbink","Goomy","Sliggoo","Goodra","Klefki","Phantump","Trevenant","Pumpkaboo","Gourgeist","Bergmite","Avalugg","Noibat","Noivern","Xerneas","Yveltal","Zygarde","Diancie","Hoopa","Volcanion","Rowlet","Dartrix","Decidueye","Litten","Torracat","Incineroar","Popplio","Brionne","Primarina","Pikipek","Trumbeak","Toucannon","Yungoos","Gumshoos","Grubbin","Charjabug","Vikavolt","Crabrawler","Crabominable","Oricorio","Cutiefly","Ribombee","Rockruff","Lycanroc","Wishiwashi","Mareanie","Toxapex","Mudbray","Mudsdale","Dewpider","Araquanid","Fomantis","Lurantis","Morelull","Shiinotic","Salandit","Salazzle","Stufful","Bewear","Bounsweet","Steenee","Tsareena","Comfey","Oranguru","Passimian","Wimpod","Golisopod","Sandygast","Palossand","Pyukumuku","Código Cero","Silvally","Minior","Komala","Turtonator","Togedemaru","Mimikyu","Bruxish","Drampa","Dhelmise","Jangmo-o","Hakamo-o","Kommo-o","Tapu Koko","Tapu Lele","Tapu Bulu","Tapu Fini","Cosmog","Cosmoem","Solgaleo","Lunala","Nihilego","Buzzwole","Pheromosa","Xurkitree","Celesteela","Kartana","Guzzlord","Necrozma","Magearna","Marshadow","Poipole","Naganadel","Stakataka","Blacephalon","Zeraora","Meltan","Melmetal","Grookey","Thwackey","Rillaboom","Scorbunny","Raboot","Cinderace","Sobble","Drizzile","Inteleon","Skwovet","Greedent","Rookidee","Corvisquire","Corviknight","Blipbug","Dottler","Orbeetle","Nickit","Thievul","Gossifleur","Eldegoss","Wooloo","Dubwool","Chewtle","Drednaw","Yamper","Boltund","Rolycoly","Carkol","Coalossal","Applin","Flapple","Appletun","Silicobra","Sandaconda","Cramorant","Arrokuda","Barraskewda","Toxel","Toxtricity","Sizzlipede","Centiskorch","Clobbopus","Grapploct","Sinistea","Polteageist","Hatenna","Hattrem","Hatterene","Impidimp","Morgrem","Grimmsnarl","Obstagoon","Perrserker","Cursola","Sirfetch’d","Mr. Rime","Runerigus","Milcery","Alcremie","Falinks","Pincurchin","Snom","Frosmoth","Stonjourner","Eiscue","Indeedee","Morpeko","Cufant","Copperajah","Dracozolt","Arctozolt","Dracovish","Arctovish","Duraludon","Dreepy","Drakloak","Dragapult","Zacian","Zamazenta","Eternatus","Kubfu","Urshifu","Zarude","Regieleki","Regidrago","Glastrier","Spectrier","Calyrex","Wyrdeer","Kleavor","Ursaluna","Basculegion","Sneasler","Overqwil","Enamorus","Sprigatito","Floragato","Meowscarada","Fuecoco","Crocalor","Skeledirge","Quaxly","Quaxwell","Quaquaval","Lechonk","Oinkologne","Tarountula","Spidops","Nymble","Lokix","Pawmi","Pawmo","Pawmot","Tandemaus","Maushold","Fidough","Dachsbun","Smoliv","Dolliv","Arboliva","Squawkabilly","Nacli","Naclstack","Garganacl","Charcadet","Armarouge","Ceruledge","Tadbulb","Bellibolt","Wattrel","Kilowattrel","Maschiff","Mabosstiff","Shroodle","Grafaiai","Bramblin","Brambleghast","Toedscool","Toedscruel","Klawf","Capsakid","Scovillain","Rellor","Rabsca","Flittle","Espathra","Tinkatink","Tinkatuff","Tinkaton","Wiglett","Wugtrio","Bombirdier","Finizen","Palafin","Varoom","Revavroom","Cyclizar","Orthworm","Glimmet","Glimmora","Greavard","Houndstone","Flamigo","Cetoddle","Cetitan","Veluza","Dondozo","Tatsugiri","Annihilape","Clodsire","Farigiraf","Dudunsparce","Kingambit","Colmilargo","Colagrito","Furioseta","Melenaleteo","Reptalada","Pelarena","Ferrodada","Ferrosaco","Ferropalmas","Ferrocuello","Ferropolilla","Ferropúas","Frigibax","Arctibax","Baxcalibur","Gimmighoul","Gholdengo","Wo-Chien","Chien-Pao","Ting-Lu","Chi-Yu","Bramaluna","Ferropaladín","Koraidon","Miraidon","Ondulagua","Ferroverdor","Dipplin","Poltchageist","Sinistcha","Okidogi","Munkidori","Fezandipiti","Ogerpon","Archaludon","Hydrapple","Flamariete","Electrofuria","Ferromole","Ferrotesta","Terapagos","Pecharunt"],"generationRanges":[[1,151],[152,251],[252,386],[387,493],[494,649],[650,721],[722,809],[810,905],[906,1025]]};
+const gens=[{name:'Kanto',id:1},{name:'Johto',id:2},{name:'Hoenn',id:3},{name:'Sinnoh',id:4},{name:'Teselia',id:5},{name:'Kalos',id:6},{name:'Alola',id:7},{name:'Galar',id:8},{name:'Paldea',id:9}].map((g,i)=>({...g,start:DATA.generationRanges[i][0],end:DATA.generationRanges[i][1]}));
+let owned=new Set();
+try { const saved=JSON.parse(window.localStorage.getItem('pikadex-owned-v3')||'[]'); if(Array.isArray(saved)) owned=new Set(saved.filter(n=>Number.isInteger(n)&&n>=1&&n<=1025)); } catch(e) {}
+let search='', ownership='all';
+const $=id=>document.getElementById(id);
+function nameOf(id){return DATA.names[id-1]||'Desconocido';}
+function update(){
+  const n=owned.size;
+  $('have').textContent=n.toLocaleString('es-ES');
+  $('pct').textContent=(n/1025*100).toFixed(1).replace('.',',')+'%';
+  $('bar').style.width=(n/1025*100)+'%';
+  $('missing').textContent=`${1025-n} pendientes`;
+  gens.forEach(g=>{
+    const total=g.end-g.start+1;
+    let count=0; for(let id=g.start;id<=g.end;id++) if(owned.has(id)) count++;
+    const el=$('count-'+g.id); if(el) el.textContent=`${count} / ${total}`;
+    const bar=$('bar-'+g.id); if(bar) bar.style.width=(count/total*100)+'%';
+  });
+}
+function matches(id){
+ const n=nameOf(id).toLocaleLowerCase('es');
+ return (!search||n.includes(search)||String(id).includes(search)||String(id).padStart(4,'0').includes(search)) &&
+ (ownership==='all'||(ownership==='owned'&&owned.has(id))||(ownership==='missing'&&!owned.has(id)));
+}
+function render(g){
+ const bodyEl=$('body-'+g.id); while(bodyEl.firstChild) bodyEl.removeChild(bodyEl.firstChild);
+ const grid=document.createElement('div'); grid.className='cards'; let count=0;
+ for(let id=g.start;id<=g.end;id++){
+   if(!matches(id)) continue;
+   count++;
+   const b=document.createElement('button'); b.type='button'; b.className='poke'+(owned.has(id)?' owned':'');
+   const number=document.createElement('span'); number.className='number'; number.textContent='N.º '+String(id).padStart(4,'0');
+   const label=document.createElement('b'); label.textContent=nameOf(id);
+   b.appendChild(number);
+   if(owned.has(id)){const mark=document.createElement('span');mark.className='ownedmark';mark.textContent='✓';b.appendChild(mark);}
+   b.appendChild(label);
+   b.addEventListener('click',()=>{
+     if(owned.has(id)) owned.delete(id); else owned.add(id);
+     try{window.localStorage.setItem('pikadex-owned-v3',JSON.stringify([...owned]));}catch(e){}
+     render(g); update();
+   });
+   grid.appendChild(b);
+ }
+ if(!count){const empty=document.createElement('div');empty.className='empty';empty.textContent='No hay resultados en esta generación.';bodyEl.appendChild(empty);}
+ else bodyEl.appendChild(grid);
+ update();
+}
+gens.forEach(g=>{
+ const head=$('head-'+g.id), bodyEl=$('body-'+g.id), arrow=$('arrow-'+g.id);
+ head.addEventListener('click',()=>{
+   const opening=bodyEl.hidden;
+   bodyEl.hidden=!opening;
+   head.setAttribute('aria-expanded',String(opening));
+   arrow.textContent=opening?'⌃':'⌄';
+   if(opening) render(g);
+ });
+});
+$('search').addEventListener('input',e=>{
+ search=e.target.value.trim().toLocaleLowerCase('es');
+ gens.forEach(g=>{if(!$('body-'+g.id).hidden)render(g);});
+ $('status').textContent=search?`Búsqueda: “${e.target.value}”`:'Abre una generación para ver sus casillas.';
+});
+$('ownership').addEventListener('change',e=>{
+ ownership=e.target.value;
+ gens.forEach(g=>{if(!$('body-'+g.id).hidden)render(g);});
+ $('status').textContent=ownership==='all'?'Mostrando todos los Pokémon.':ownership==='owned'?'Mostrando los Pokémon marcados como conseguidos.':'Mostrando los Pokémon pendientes.';
+});
+update();
+const firstGeneration=gens[0];
+const firstHead=$('head-'+firstGeneration.id);
+const firstBody=$('body-'+firstGeneration.id);
+firstBody.hidden=false;
+firstHead.setAttribute('aria-expanded','true');
+$('arrow-'+firstGeneration.id).textContent='⌃';
+render(firstGeneration);
+$('status').textContent='Generación 1 abierta. Selecciona los Pokémon que tienes.';
+</script></body></html>
